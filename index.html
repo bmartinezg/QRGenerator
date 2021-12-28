@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>QRG</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="qrcode.js"></script>
+</head>
+<body>
+<input id="text" type="text" value="www.ejemplo.com" style="width:80%" />
+<hr />
+<div id="qrcode" style="width:200px; height:200px; margin-top:15px;"></div>
+
+<script type="text/javascript">
+var qrcode = new QRCode(document.getElementById("qrcode"), {
+	width : 200,
+	height : 200,
+	useSVG: false
+});
+
+function generateQR () {		
+	var input = document.getElementById("text");
+	
+	if (!input.value) {
+		alert("El campo no puede estar vacío");
+		input.focus();
+		return;
+	}
+	
+	qrcode.makeCode(input.value);
+}
+
+generateQR();
+
+$("#text").
+	on("blur", function () {
+		generateQR();
+	}).
+	on("keydown", function (e) {
+		if (e.keyCode == 13) {
+			generateQR();
+		}
+	});
+</script>
+</body>
